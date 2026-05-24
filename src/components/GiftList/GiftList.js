@@ -129,8 +129,8 @@ function GiftList() {
       )}
 
       {loadingAction && (
-        <div className="loadingOverlay">
-          <div className="spinner" />
+        <div className={styles.loadingOverlay}>
+          <div className={styles.spinner} />
           <p>Procesando reserva...</p>
         </div>
       )}
