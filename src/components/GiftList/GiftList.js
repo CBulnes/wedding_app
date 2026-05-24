@@ -15,9 +15,32 @@ function GiftList() {
 
   const [loading, setLoading] = useState(true);
 
+  const [alert, setAlert] = useState({
+    show: false,
+    title: "",
+    message: "",
+    type: "success",
+  });
+
   useEffect(() => {
     loadGifts();
   }, []);
+
+  function showAlert(title, message, type = "success") {
+    setAlert({
+      show: true,
+      title,
+      message,
+      type,
+    });
+
+    setTimeout(() => {
+      setAlert((prev) => ({
+        ...prev,
+        show: false,
+      }));
+    }, 2500);
+  }
 
   async function loadGifts() {
     try {
@@ -64,13 +87,17 @@ function GiftList() {
 
       // VALIDACIÓN REAL
       if (updatedGift && updatedGift.reservationId !== reservationId) {
-        alert("Este regalo ya fue reservado por otra persona 😅");
+        showAlert(
+          "Ups 😅",
+          "Este regalo ya fue reservado por otra persona",
+          "error",
+        );
 
         return;
       }
 
       // Éxito
-      alert("¡Regalo reservado! 💛");
+      showAlert("¡Listo 💛", "Has reservado el regalo con éxito", "success");
     } catch (error) {
       console.error(error);
 
@@ -88,6 +115,14 @@ function GiftList() {
 
   return (
     <section id="gift-section" className={styles.giftSection}>
+
+      {alert.show && (
+        <div className={`custom-alert ${alert.type}`}>
+          <h4>{alert.title}</h4>
+          <p>{alert.message}</p>
+        </div>
+      )}
+      
       <h2>Lista de regalos</h2>
 
       <div className={styles.grid}>

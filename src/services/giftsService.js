@@ -7,19 +7,22 @@ export async function fetchGifts() {
   return response.json();
 }
 
-export async function reserveGift( giftId, personName, reservationId ) {
-  const response = await fetch(API_URL, {
-    method: "POST",
+export async function reserveGift(
+  giftId,
+  personName,
+  reservationId
+) {
 
-    headers: {
-      "Content-Type": "application/json",
-    },
+  await fetch(API_URL, {
+
+    method: "POST",
+    mode: "no-cors",
 
     body: JSON.stringify({
-        id: giftId,
-        name: personName,
-        reservationId,
+      id: giftId,
+      name: personName,
+      reservationId,
     }),
+
   });
-  return response.json();
 }
