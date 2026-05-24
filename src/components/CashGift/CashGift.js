@@ -1,5 +1,6 @@
 import styles from "./CashGift.module.css";
 import yapeQR from "../../assets/yape.png";
+import { PAYMENT_INFO } from "../../config";
 
 function CashGift() {
 
@@ -7,9 +8,9 @@ function CashGift() {
     "Hola 😊 Ya realicé el regalo para su boda.";
 
   const whatsappUrl =
-    `https://wa.me/51947743416?text=${encodeURIComponent(
-      whatsappMessage
-    )}`;
+  `https://wa.me/${PAYMENT_INFO.yapeRaw}?text=${encodeURIComponent(
+    whatsappMessage
+  )}`;
 
   return (
     <section id="cash-section" className={styles.section}>
@@ -37,13 +38,14 @@ function CashGift() {
             <p>
               <strong>Yape:</strong>
               <br />
-              947743416
+              {PAYMENT_INFO.yapeDisplay}
+              <p>Nombre: {PAYMENT_INFO.holder}</p>
             </p>
 
             <p>
               <strong>Cuenta BCP:</strong>
               <br />
-              123-4567890-0-12
+              {PAYMENT_INFO.cuenta}
             </p>
 
             <a
