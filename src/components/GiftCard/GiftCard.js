@@ -1,6 +1,6 @@
 import styles from "./GiftCard.module.css";
 
-function GiftCard({ gift, onReserve, loadingAction  }) {
+function GiftCard({ gift, onReserve, loadingAction, loadingGiftId }) {
   const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(gift.search)}`;
 
   return (
@@ -15,8 +15,8 @@ function GiftCard({ gift, onReserve, loadingAction  }) {
             Buscar
           </a>
 
-          <button disabled={loadingAction} onClick={onReserve}>
-            {loadingAction ? "Reservando..." : "Yo lo compro"}
+          <button disabled={loadingGiftId === gift.id} onClick={onReserve}>
+            {loadingGiftId === gift.id ? "Reservando..." : "Yo lo compro"}
           </button>
         </div>
       )}

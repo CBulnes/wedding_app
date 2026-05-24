@@ -17,6 +17,8 @@ function GiftList() {
 
   const [loadingAction, setLoadingAction] = useState(false);
 
+  const [loadingGiftId, setLoadingGiftId] = useState(null);
+
   const [alert, setAlert] = useState({
     show: false,
     title: "",
@@ -64,8 +66,22 @@ function GiftList() {
 
   async function handleReserve(giftId, personName) {
     setLoadingAction(true);
+    setLoadingGiftId(giftId);
 
     try {
+      const isValidName = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{2,50}$/.test(
+        personName.trim(),
+      );
+
+      if (!isValidName) {
+        showAlert(
+          "Nombre inválido",
+          "Ingresa un nombre válido (solo letras)",
+          "error",
+        );
+        return;
+      }
+
       const reservationId = crypto.randomUUID();
 
       await reserveGift(giftId, personName, reservationId);
@@ -104,8 +120,9 @@ function GiftList() {
     } catch (error) {
       console.error(error);
       showAlert("Ups 😅", "Ocurrió un error al reservar", "error");
-    } finally{      
-        setLoadingAction(false);
+    } finally {
+      setLoadingAction(false);
+      setLoadingGiftId(null);
     }
   }
 
@@ -140,9 +157,10 @@ function GiftList() {
       <div className={styles.grid}>
         {gifts.map((gift) => (
           <GiftCard
-            loadingAction={loadingAction}
-            key={gift.id}
             gift={gift}
+            loadingAction={loadingAction}
+            loadingGiftId={loadingGiftId}
+            key={gift.id}
             onReserve={() => setSelectedGift(gift)}
           />
         ))}
@@ -150,6 +168,7 @@ function GiftList() {
 
       {selectedGift && (
         <ReserveModal
+          handleReserve={handleReserve}
           gift={selectedGift}
           onClose={() => setSelectedGift(null)}
           onReserve={(name) => handleReserve(selectedGift.id, name)}
