@@ -4,9 +4,6 @@ import styles from "./Countdown.module.css";
 
 function Countdown() {
 
-  const weddingDate =
-    new Date("2026-10-24T00:00:00");
-
   const [timeLeft, setTimeLeft] =
     useState({
       days: 0,
@@ -16,6 +13,9 @@ function Countdown() {
     });
 
   useEffect(() => {
+
+    const weddingDate =
+      new Date("2026-10-24T00:00:00");
 
     function getTimeLeft() {
 
@@ -63,7 +63,7 @@ function Countdown() {
 
     return () => clearInterval(interval);
 
-  }, [weddingDate]);
+  }, []);
 
   return (
     <div className={styles.countdown}>
