@@ -96,7 +96,6 @@ function GiftList() {
           "Este regalo ya fue reservado por otra persona",
           "error",
         );
-        setLoadingAction(false);
         return;
       }
 
@@ -105,7 +104,8 @@ function GiftList() {
     } catch (error) {
       console.error(error);
       showAlert("Ups 😅", "Ocurrió un error al reservar", "error");
-      setLoadingAction(false);
+    } finally{      
+        setLoadingAction(false);
     }
   }
 
