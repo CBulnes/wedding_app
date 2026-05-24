@@ -1,0 +1,81 @@
+
+.section {
+  padding: 8rem 2rem;
+
+  background: white;
+}
+
+.container {
+  max-width: 1000px;
+
+  margin: 0 auto;
+
+  text-align: center;
+}
+
+.container h2 {
+  font-size: clamp(3rem, 7vw, 5rem);
+
+  margin-bottom: 2rem;
+}
+
+.description {
+  font-size: 1.1rem;
+
+  line-height: 1.8;
+
+  margin-bottom: 4rem;
+}
+
+.card {
+  background: #f8f6f2;
+
+  border-radius: 32px;
+
+  padding: 3rem;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 4rem;
+
+  flex-wrap: wrap;
+}
+
+.card img {
+  width: 250px;
+
+  border-radius: 24px;
+}
+
+.info {
+  text-align: left;
+}
+
+.info p {
+  margin-bottom: 2rem;
+
+  line-height: 1.8;
+}
+
+.info a {
+  display: inline-block;
+
+  text-decoration: none;
+
+  background: #1f1f1f;
+
+  color: white;
+
+  padding: 1rem 1.8rem;
+
+  border-radius: 999px;
+
+  transition: 0.3s ease;
+}
+
+.info a:hover {
+  background: #444;
+}

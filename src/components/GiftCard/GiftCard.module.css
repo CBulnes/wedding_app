@@ -1,0 +1,76 @@
+.card {
+  background: white;
+
+  padding: 2rem;
+
+  border-radius: 28px;
+
+  box-shadow: 0 10px 40px rgba(0,0,0,0.06);
+
+  transition: 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card h3 {
+  font-size: 2rem;
+
+  font-weight: 500;
+
+  margin-bottom: 2rem;
+}
+
+.actions {
+  display: flex;
+
+  gap: 1rem;
+
+  flex-wrap: wrap;
+}
+
+.actions a,
+.actions button {
+  border: none;
+
+  text-decoration: none;
+
+  background: #1f1f1f;
+
+  color: white;
+
+  padding: 0.9rem 1.4rem;
+
+  border-radius: 999px;
+
+  cursor: pointer;
+
+  transition: 0.3s ease;
+}
+
+.actions a:hover,
+.actions button:hover {
+  background: #444;
+}
+
+.reserved {
+  color: #2e8b57;
+
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+
+  .actions {
+    flex-direction: column;
+  }
+
+  .actions a,
+  .actions button {
+    width: 100%;
+
+    text-align: center;
+  }
+
+}
