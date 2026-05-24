@@ -154,7 +154,7 @@ function GiftList() {
 
       <h2>Lista de regalos</h2>
 
-      <div className={styles.grid}>
+      <div className={styles.giftGrid}>
         {gifts.map((gift) => (
           <GiftCard
             gift={gift}
