@@ -82,7 +82,6 @@ function GiftList() {
     setLoadingGiftId(giftId);
 
     try {
-
       const reservationId = crypto.randomUUID();
       await reserveGift(giftId, personName, reservationId);
 
@@ -117,8 +116,6 @@ function GiftList() {
 
       // Éxito
       showAlert("¡Listo 💛", "Has reservado el regalo con éxito", "success");
-      setShowModal(false);
-    setName("");
     } catch (error) {
       console.error(error);
       showAlert("Ups 😅", "Ocurrió un error al reservar", "error");
@@ -170,7 +167,6 @@ function GiftList() {
 
       {selectedGift && (
         <ReserveModal
-          handleReserve={handleReserve}
           gift={selectedGift}
           onClose={() => setSelectedGift(null)}
           onReserve={(name) => handleReserve(selectedGift.id, name)}

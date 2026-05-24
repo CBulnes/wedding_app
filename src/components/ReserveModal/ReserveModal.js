@@ -1,19 +1,14 @@
 import { useState } from "react";
-
 import styles from "./ReserveModal.module.css";
 
-function ReserveModal({ gift, onClose, onReserve, handleReserve }) {
+function ReserveModal({ gift, onClose, onReserve }) {
   const [name, setName] = useState("");
 
   function handleSubmit() {
     if (!name.trim()) return;
-    onReserve(name);
-    onClose();
-  }
 
-  const confirmReserve = async () => {
-    await handleReserve(gift.id, name);
-  };
+    onReserve(name); // 👈 único flujo
+  }
 
   return (
     <div className={styles.backdrop}>
@@ -28,15 +23,18 @@ function ReserveModal({ gift, onClose, onReserve, handleReserve }) {
           placeholder="Tu nombre"
           onChange={(e) => setName(e.target.value)}
           onKeyDown={(e) => {
-            if (e.key === "Enter" && name.trim()) {
-              confirmReserve();
+            if (e.key === "Enter") {
+              handleSubmit();
             }
           }}
         />
 
         <div className={styles.actions}>
           <button onClick={onClose}>Cancelar</button>
-          <button onClick={confirmReserve}>Confirmar</button>
+
+          <button onClick={handleSubmit}>
+            Confirmar
+          </button>
         </div>
       </div>
     </div>
