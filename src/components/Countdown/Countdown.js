@@ -8,42 +8,51 @@ function Countdown() {
     new Date("2026-10-24T00:00:00");
 
   const [timeLeft, setTimeLeft] =
-    useState(getTimeLeft());
-
-  function getTimeLeft() {
-
-    const now = new Date();
-
-    const difference =
-      weddingDate - now;
-
-    const days =
-      Math.floor(difference / (1000 * 60 * 60 * 24));
-
-    const hours =
-      Math.floor(
-        (difference / (1000 * 60 * 60)) % 24
-      );
-
-    const minutes =
-      Math.floor(
-        (difference / (1000 * 60)) % 60
-      );
-
-    const seconds =
-      Math.floor(
-        (difference / 1000) % 60
-      );
-
-    return {
-      days,
-      hours,
-      minutes,
-      seconds,
-    };
-  }
+    useState({
+      days: 0,
+      hours: 0,
+      minutes: 0,
+      seconds: 0,
+    });
 
   useEffect(() => {
+
+    function getTimeLeft() {
+
+      const now = new Date();
+
+      const difference =
+        weddingDate - now;
+
+      const days =
+        Math.floor(
+          difference / (1000 * 60 * 60 * 24)
+        );
+
+      const hours =
+        Math.floor(
+          (difference / (1000 * 60 * 60)) % 24
+        );
+
+      const minutes =
+        Math.floor(
+          (difference / (1000 * 60)) % 60
+        );
+
+      const seconds =
+        Math.floor(
+          (difference / 1000) % 60
+        );
+
+      return {
+        days,
+        hours,
+        minutes,
+        seconds,
+      };
+    }
+
+    setTimeLeft(getTimeLeft());
 
     const interval =
       setInterval(() => {
@@ -54,7 +63,7 @@ function Countdown() {
 
     return () => clearInterval(interval);
 
-  }, []);
+  }, [weddingDate]);
 
   return (
     <div className={styles.countdown}>

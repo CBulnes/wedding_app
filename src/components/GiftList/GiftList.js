@@ -6,12 +6,7 @@ import GiftCard from "../GiftCard/GiftCard";
 
 import ReserveModal from "../ReserveModal/ReserveModal";
 
-import {
-  fetchGifts,
-  reserveGift,
-} from "../../services/giftsService";
-
-import useFadeIn from "../../hooks/useFadeIn";
+import { fetchGifts, reserveGift } from "../../services/giftsService";
 
 function GiftList() {
 
@@ -23,9 +18,6 @@ function GiftList() {
 
   const [loading, setLoading] =
     useState(true);
-
-  const [ref, visible] =
-    useFadeIn();
 
   useEffect(() => {
 
@@ -111,7 +103,6 @@ function GiftList() {
 
   return (
     <section
-      ref={ref}
       id="gift-section"
       className={styles.giftSection}
     >
