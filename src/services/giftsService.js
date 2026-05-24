@@ -1,5 +1,4 @@
-const API_URL =
-  "https://script.google.com/macros/s/AKfycbxyLklpkxK1iWJe_fAxzUGYweAnp3FanC56py6twROEJHfyQavo0Y3sRfy8VuRLcBPw/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbwijOmjB6tlU4eF08sn-IAE1F7ikQImZjl9_Qv9RKbrBrBFkMSuzlxeJBjWCNrdzrx63A/exec";
 
 export async function fetchGifts() {
   const response = await fetch(API_URL);
