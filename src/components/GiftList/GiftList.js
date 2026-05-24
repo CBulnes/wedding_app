@@ -140,6 +140,7 @@ function GiftList() {
       <div className={styles.grid}>
         {gifts.map((gift) => (
           <GiftCard
+            loadingAction={loadingAction}
             key={gift.id}
             gift={gift}
             onReserve={() => setSelectedGift(gift)}

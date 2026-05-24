@@ -1,6 +1,6 @@
 import styles from "./GiftCard.module.css";
 
-function GiftCard({ gift, onReserve }) {
+function GiftCard({ gift, onReserve, loadingAction  }) {
   const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(gift.search)}`;
 
   return (
