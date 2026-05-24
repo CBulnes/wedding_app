@@ -116,6 +116,7 @@ function GiftList() {
 
       // Éxito
       showAlert("¡Listo 💛", "Has reservado el regalo con éxito", "success");
+      setSelectedGift(null);
     } catch (error) {
       console.error(error);
       showAlert("Ups 😅", "Ocurrió un error al reservar", "error");

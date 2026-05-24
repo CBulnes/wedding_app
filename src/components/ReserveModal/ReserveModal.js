@@ -4,6 +4,10 @@ import styles from "./ReserveModal.module.css";
 function ReserveModal({ gift, onClose, onReserve }) {
   const [name, setName] = useState("");
 
+  useEffect(() => {
+    setName("");
+  }, [gift]);
+
   function handleSubmit() {
     if (!name.trim()) return;
 
@@ -32,9 +36,7 @@ function ReserveModal({ gift, onClose, onReserve }) {
         <div className={styles.actions}>
           <button onClick={onClose}>Cancelar</button>
 
-          <button onClick={handleSubmit}>
-            Confirmar
-          </button>
+          <button onClick={handleSubmit}>Confirmar</button>
         </div>
       </div>
     </div>
