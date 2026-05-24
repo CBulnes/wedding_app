@@ -88,22 +88,29 @@
 
 .alertOverlay {
   position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.4);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 10000;
+
+  background: rgba(0, 0, 0, 0.4);
+
+  z-index: 99999;
 }
 
 .alertBox {
-  background: white;
+  background-color: #ffffff; /* IMPORTANTE */
+  color: #111;
   padding: 24px 28px;
   border-radius: 14px;
   min-width: 280px;
   text-align: center;
   box-shadow: 0 15px 40px rgba(0,0,0,0.25);
-  animation: pop 0.25s ease;
+  z-index: 100000;
 }
 
 .alertBox.success {

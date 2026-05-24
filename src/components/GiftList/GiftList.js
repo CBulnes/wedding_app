@@ -120,8 +120,8 @@ function GiftList() {
   return (
     <section id="gift-section" className={styles.giftSection}>
       {alert.show && (
-        <div className="alertOverlay">
-          <div className={`alertBox ${alert.type}`}>
+        <div className={styles.alertOverlay}>
+          <div className={`${styles.alertBox} ${styles[alert.type]}`}>
             <h3>{alert.title}</h3>
             <p>{alert.message}</p>
           </div>
