@@ -39,21 +39,14 @@ function GiftList() {
 
   async function handleReserve(giftId, personName) {
     try {
-      const result = await reserveGift(giftId, personName);
+      const reservationId = crypto.randomUUID();
 
-      if (!result.success) {
-        alert(result.message);
+      await reserveGift(giftId, personName, reservationId);
 
-        // recargar regalos reales
-        await loadGifts();
+      // Esperar actualización de Sheets
+      await new Promise((resolve) => setTimeout(resolve, 1200));
 
-        return;
-      }
-
-      // Esperar un poco para que Sheets actualice
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      // Recargar desde backend
+      // Recargar regalos
       const data = await fetchGifts();
 
       const normalizedData = data.map((gift) => ({
@@ -63,8 +56,25 @@ function GiftList() {
       }));
 
       setGifts(normalizedData);
+
+      // Buscar regalo actualizado
+      const updatedGift = normalizedData.find(
+        (gift) => String(gift.id) === String(giftId),
+      );
+
+      // VALIDACIÓN REAL
+      if (updatedGift && updatedGift.reservationId !== reservationId) {
+        alert("Este regalo ya fue reservado por otra persona 😅");
+
+        return;
+      }
+
+      // Éxito
+      alert("¡Regalo reservado! 💛");
     } catch (error) {
       console.error(error);
+
+      alert("Ocurrió un error al reservar.");
     }
   }
 
