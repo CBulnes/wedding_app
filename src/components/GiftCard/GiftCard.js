@@ -15,7 +15,9 @@ function GiftCard({ gift, onReserve }) {
             Buscar
           </a>
 
-          <button onClick={onReserve}>Yo lo compro</button>
+          <button disabled={loadingAction} onClick={onReserve}>
+            {loadingAction ? "Reservando..." : "Yo lo compro"}
+          </button>
         </div>
       )}
     </div>

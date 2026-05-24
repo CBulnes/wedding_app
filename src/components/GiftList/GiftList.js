@@ -15,6 +15,8 @@ function GiftList() {
 
   const [loading, setLoading] = useState(true);
 
+  const [loadingAction, setLoadingAction] = useState(false);
+
   const [alert, setAlert] = useState({
     show: false,
     title: "",
@@ -61,6 +63,8 @@ function GiftList() {
   }
 
   async function handleReserve(giftId, personName) {
+    setLoadingAction(true);
+
     try {
       const reservationId = crypto.randomUUID();
 
@@ -92,7 +96,7 @@ function GiftList() {
           "Este regalo ya fue reservado por otra persona",
           "error",
         );
-
+        setLoadingAction(false);
         return;
       }
 
@@ -100,8 +104,8 @@ function GiftList() {
       showAlert("¡Listo 💛", "Has reservado el regalo con éxito", "success");
     } catch (error) {
       console.error(error);
-
-      alert("Ocurrió un error al reservar.");
+      showAlert("Ups 😅", "Ocurrió un error al reservar", "error");
+      setLoadingAction(false);
     }
   }
 
@@ -115,14 +119,22 @@ function GiftList() {
 
   return (
     <section id="gift-section" className={styles.giftSection}>
-
       {alert.show && (
-        <div className={`custom-alert ${alert.type}`}>
-          <h4>{alert.title}</h4>
-          <p>{alert.message}</p>
+        <div className="alertOverlay">
+          <div className={`alertBox ${alert.type}`}>
+            <h3>{alert.title}</h3>
+            <p>{alert.message}</p>
+          </div>
         </div>
       )}
-      
+
+      {loadingAction && (
+        <div className="loadingOverlay">
+          <div className="spinner" />
+          <p>Procesando reserva...</p>
+        </div>
+      )}
+
       <h2>Lista de regalos</h2>
 
       <div className={styles.grid}>
