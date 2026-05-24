@@ -7,11 +7,13 @@ function ReserveModal({ gift, onClose, onReserve, handleReserve }) {
 
   function handleSubmit() {
     if (!name.trim()) return;
-
     onReserve(name);
-
     onClose();
   }
+
+  const confirmReserve = async () => {
+    await handleReserve(gift.id, name);
+  };
 
   return (
     <div className={styles.backdrop}>
@@ -27,15 +29,14 @@ function ReserveModal({ gift, onClose, onReserve, handleReserve }) {
           onChange={(e) => setName(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === "Enter" && name.trim()) {
-              handleReserve();
+              confirmReserve();
             }
           }}
         />
 
         <div className={styles.actions}>
           <button onClick={onClose}>Cancelar</button>
-
-          <button onClick={handleSubmit}>Confirmar</button>
+          <button onClick={confirmReserve}>Confirmar</button>
         </div>
       </div>
     </div>

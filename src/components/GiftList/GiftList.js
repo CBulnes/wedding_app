@@ -65,25 +65,25 @@ function GiftList() {
   }
 
   async function handleReserve(giftId, personName) {
+    const isValidName = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{2,50}$/.test(
+      personName.trim(),
+    );
+
+    if (!isValidName) {
+      showAlert(
+        "Nombre inválido",
+        "Ingresa un nombre válido (solo letras)",
+        "error",
+      );
+      return;
+    }
+
     setLoadingAction(true);
     setLoadingGiftId(giftId);
 
     try {
-      const isValidName = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{2,50}$/.test(
-        personName.trim(),
-      );
-
-      if (!isValidName) {
-        showAlert(
-          "Nombre inválido",
-          "Ingresa un nombre válido (solo letras)",
-          "error",
-        );
-        return;
-      }
 
       const reservationId = crypto.randomUUID();
-
       await reserveGift(giftId, personName, reservationId);
 
       // Esperar actualización de Sheets
@@ -117,6 +117,8 @@ function GiftList() {
 
       // Éxito
       showAlert("¡Listo 💛", "Has reservado el regalo con éxito", "success");
+      setShowModal(false);
+    setName("");
     } catch (error) {
       console.error(error);
       showAlert("Ups 😅", "Ocurrió un error al reservar", "error");
