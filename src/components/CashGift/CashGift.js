@@ -39,7 +39,12 @@ function CashGift() {
               <strong>Yape:</strong>
               <br />
               {PAYMENT_INFO.yapeDisplay}
-              <p>Nombre: {PAYMENT_INFO.holder}</p>
+            </p>
+
+            <p>
+              <strong>Nombre:</strong>
+              <br />
+              {PAYMENT_INFO.holder}
             </p>
 
             <p>

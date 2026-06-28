@@ -1,22 +1,23 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import styles from "./GiftList.module.css";
 
 import GiftCard from "../GiftCard/GiftCard";
-
 import ReserveModal from "../ReserveModal/ReserveModal";
 
-import { fetchGifts, reserveGift } from "../../services/giftsService";
+import {
+  fetchGifts,
+  reserveGift,
+} from "../../services/giftsService";
 
 function GiftList() {
-  const [gifts, setGifts] = useState([]);
 
+  const [gifts, setGifts] = useState([]);
+  const [sortBy, setSortBy] = useState("nameAsc");
   const [selectedGift, setSelectedGift] = useState(null);
 
   const [loading, setLoading] = useState(true);
-
   const [loadingAction, setLoadingAction] = useState(false);
-
   const [loadingGiftId, setLoadingGiftId] = useState(null);
 
   const [alert, setAlert] = useState({
@@ -27,7 +28,12 @@ function GiftList() {
   });
 
   useEffect(() => {
-    loadGifts();
+    const init = async () => {
+      await loadGifts();
+    };
+
+    init();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function showAlert(title, message, type = "success") {
@@ -46,17 +52,98 @@ function GiftList() {
     }, 2500);
   }
 
+  function normalizeGifts(data) {
+  return data.map((gift) => ({
+    ...gift,
+
+    units: Number(gift.units),
+    reservedUnits: Number(gift.reservedUnits),
+    availableUnits: Number(gift.availableUnits),
+
+    reserved: Number(gift.availableUnits) <= 0,
+  }));
+}
+
+  function getPriceValue(price) {
+    if (!price) return 0;
+
+    return Number(
+      price
+        .replace("S/", "")
+        .split("-")[0]
+        .trim()
+    );
+  }
+
+  function sortGifts(gifts) {
+    const sorted = [...gifts];
+
+    switch (sortBy) {
+      case "nameAsc":
+        sorted.sort((a, b) => a.name.localeCompare(b.name));
+        break;
+
+      case "nameDesc":
+        sorted.sort((a, b) => b.name.localeCompare(a.name));
+        break;
+
+      case "priceAsc":
+        sorted.sort(
+          (a, b) =>
+            getPriceValue(a.price) -
+            getPriceValue(b.price)
+        );
+        break;
+
+      case "priceDesc":
+        sorted.sort(
+          (a, b) =>
+            getPriceValue(b.price) -
+            getPriceValue(a.price)
+        );
+        break;
+
+      default:
+        break;
+    }
+
+    return sorted;
+  }
+
+  async function refreshGifts() {
+    const data = await fetchGifts();
+    const normalized = normalizeGifts(data);
+    setGifts(normalized);
+    return normalized;
+  }
+
+  async function waitForReservation(giftId, personName) {
+    for (let i = 0; i < 5; i++) {
+
+      const updated = await refreshGifts();
+
+      const gift = updated.find(
+        (g) => String(g.id) === String(giftId)
+      );
+
+      if (
+        gift &&
+        gift.reservedBy.includes(personName)
+      ) {
+        return true;
+      }
+
+      await new Promise((resolve) =>
+        setTimeout(resolve, 400)
+      );
+    }
+
+    return false;
+  }
+
   async function loadGifts() {
     try {
-      const data = await fetchGifts();
-
-      const normalizedData = data.map((gift) => ({
-        ...gift,
-
-        reserved: gift.reserved === true || gift.reserved === "TRUE",
-      }));
-
-      setGifts(normalizedData);
+      await refreshGifts();
     } catch (error) {
       console.error(error);
     } finally {
@@ -65,15 +152,17 @@ function GiftList() {
   }
 
   async function handleReserve(giftId, personName) {
-    const isValidName = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{2,50}$/.test(
-      personName.trim(),
-    );
+
+    const isValidName =
+      /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{2,50}$/.test(
+        personName.trim()
+      );
 
     if (!isValidName) {
       showAlert(
         "Nombre inválido",
-        "Ingresa un nombre válido (solo letras)",
-        "error",
+        "Ingresa un nombre válido.",
+        "error"
       );
       return;
     }
@@ -82,63 +171,79 @@ function GiftList() {
     setLoadingGiftId(giftId);
 
     try {
-      const reservationId = crypto.randomUUID();
-      await reserveGift(giftId, personName, reservationId);
 
-      // Esperar actualización de Sheets
-      await new Promise((resolve) => setTimeout(resolve, 1200));
-
-      // Recargar regalos
-      const data = await fetchGifts();
-
-      const normalizedData = data.map((gift) => ({
-        ...gift,
-
-        reserved: gift.reserved === true || gift.reserved === "TRUE",
-      }));
-
-      setGifts(normalizedData);
-
-      // Buscar regalo actualizado
-      const updatedGift = normalizedData.find(
-        (gift) => String(gift.id) === String(giftId),
+      await reserveGift(
+        giftId,
+        personName,
+        crypto.randomUUID()
       );
 
-      // VALIDACIÓN REAL
-      if (updatedGift && updatedGift.reservationId !== reservationId) {
+      const success = await waitForReservation(
+        giftId,
+        personName
+      );
+
+      if (success) {
+
+        showAlert(
+          "¡Listo 💛",
+          "Has reservado el regalo con éxito.",
+          "success"
+        );
+
+        setSelectedGift(null);
+
+      } else {
+
         showAlert(
           "Ups 😅",
-          "Este regalo ya fue reservado por otra persona",
-          "error",
+          "No fue posible reservar el regalo.",
+          "error"
         );
-        return;
+
       }
 
-      // Éxito
-      showAlert("¡Listo 💛", "Has reservado el regalo con éxito", "success");
-      setSelectedGift(null);
     } catch (error) {
+
       console.error(error);
-      showAlert("Ups 😅", "Ocurrió un error al reservar", "error");
+
+      showAlert(
+        "Ups 😅",
+        "Ocurrió un error al reservar.",
+        "error"
+      );
+
     } finally {
+
       setLoadingAction(false);
       setLoadingGiftId(null);
+
     }
   }
 
+  const sortedGifts = sortGifts(gifts);
+
   if (loading) {
+
     return (
       <section className={styles.giftSection}>
         <h2>Cargando regalos...</h2>
       </section>
     );
+
   }
 
   return (
-    <section id="gift-section" className={styles.giftSection}>
+    <section
+      id="gift-section"
+      className={styles.giftSection}
+    >
+
       {alert.show && (
         <div className={styles.alertOverlay}>
-          <div className={`${styles.alertBox} ${styles[alert.type]}`}>
+          <div
+            className={`${styles.alertBox} ${styles[alert.type]}`}
+          >
             <h3>{alert.title}</h3>
             <p>{alert.message}</p>
           </div>
@@ -154,27 +259,64 @@ function GiftList() {
 
       <h2>Lista de regalos</h2>
 
+      <div className={styles.sortContainer}>
+        <label>Ordenar por:</label>
+
+        <select
+          value={sortBy}
+          onChange={(e) => setSortBy(e.target.value)}
+        >
+          <option value="nameAsc">
+            Nombre (A-Z)
+          </option>
+
+          <option value="nameDesc">
+            Nombre (Z-A)
+          </option>
+
+          <option value="priceAsc">
+            Precio (menor primero)
+          </option>
+
+          <option value="priceDesc">
+            Precio (mayor primero)
+          </option>
+        </select>
+      </div>
+
       <div className={styles.giftGrid}>
-        {gifts.map((gift) => (
+
+        {sortedGifts.map((gift) => (
+
           <GiftCard
-            gift={gift}
-            loadingAction={loadingAction}
-            loadingGiftId={loadingGiftId}
             key={gift.id}
-            onReserve={() => setSelectedGift(gift)}
+            gift={gift}
+            loadingGiftId={loadingGiftId}
+            onReserve={() =>
+              setSelectedGift(gift)
+            }
           />
+
         ))}
+
       </div>
 
       {selectedGift && (
+
         <ReserveModal
           gift={selectedGift}
+          loading={loadingAction}
           onClose={() => setSelectedGift(null)}
-          onReserve={(name) => handleReserve(selectedGift.id, name)}
+          onReserve={(name) =>
+            handleReserve(selectedGift.id, name)
+          }
         />
+
       )}
+
     </section>
   );
+
 }
 
 export default GiftList;

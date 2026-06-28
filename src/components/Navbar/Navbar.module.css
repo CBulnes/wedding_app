@@ -25,6 +25,14 @@
   align-items: center;
 
   z-index: 1000;
+
+
+  transition:
+  top .35s ease,
+  background .35s ease,
+  box-shadow .35s ease,
+  backdrop-filter .35s ease,
+  border .35s ease;
 }
 
 .logo {
@@ -33,6 +41,9 @@
   font-size: 2rem;
 
   color: white;
+
+
+  transition: color .35s ease;
 }
 
 nav {
@@ -51,6 +62,12 @@ nav a {
   letter-spacing: 1px;
 
   transition: 0.3s ease;
+
+
+
+  transition:
+  color .35s ease,
+  opacity .25s ease;
 }
 
 nav a:hover {
@@ -75,4 +92,26 @@ nav a:hover {
     font-size: 0.8rem;
   }
 
+}
+
+.scrolled {
+  background: rgba(255, 255, 255, 0.92);
+
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  border: 1px solid rgba(0, 0, 0, 0.05);
+
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+
+
+  top: 12px;
+}
+
+.scrolled .logo {
+  color: #2b2b2b;
+}
+
+.scrolled nav a {
+  color: #2b2b2b;
 }

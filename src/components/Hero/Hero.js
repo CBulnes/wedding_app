@@ -4,7 +4,7 @@ import Countdown from "../Countdown/Countdown";
 
 function Hero() {
   return (
-    <section className={styles.hero}>
+    <section id="hero" className={styles.hero}>
       <div className={styles.overlay}>
         <h1>Carlos & Melissa</h1>
 
