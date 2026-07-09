@@ -1,11 +1,7 @@
 .countdown {
   display: flex;
-
-  gap: 1.5rem;
-
-  flex-wrap: wrap;
-
   justify-content: center;
+  gap: 1.5rem;
 
   margin-bottom: 3rem;
 }
@@ -13,15 +9,22 @@
 .countdown div {
   min-width: 90px;
 
-  background: rgba(255,255,255,0.15);
+  background: rgba(255, 255, 255, 0.15);
 
   padding: 1rem;
 
   border-radius: 24px;
 
   backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 
   text-align: center;
+
+  transition: transform 0.25s ease;
+}
+
+.countdown div:hover {
+  transform: translateY(-3px);
 }
 
 .countdown span {
@@ -30,12 +33,76 @@
   font-size: 2rem;
 
   font-weight: 600;
+
+  color: white;
 }
 
 .countdown p {
+  margin-top: 0.35rem;
+
   font-size: 0.85rem;
 
   letter-spacing: 1px;
 
   text-transform: uppercase;
+
+  color: white;
+}
+
+/* ---------- Tablets ---------- */
+
+@media (max-width: 768px) {
+
+  .countdown {
+    gap: 0.7rem;
+    flex-wrap: nowrap;
+
+    width: 100%;
+  }
+
+  .countdown div {
+    flex: 1;
+
+    min-width: 0;
+
+    padding: 0.75rem 0.35rem;
+
+    border-radius: 18px;
+  }
+
+  .countdown span {
+    font-size: 1.55rem;
+  }
+
+  .countdown p {
+    margin-top: 0.25rem;
+
+    font-size: 0.72rem;
+
+    letter-spacing: 0.5px;
+  }
+
+}
+
+/* ---------- Teléfonos pequeños ---------- */
+
+@media (max-width: 420px) {
+
+  .countdown {
+    gap: 0.45rem;
+  }
+
+  .countdown div {
+    padding: 0.65rem 0.25rem;
+  }
+
+  .countdown span {
+    font-size: 1.35rem;
+  }
+
+  .countdown p {
+    font-size: 0.65rem;
+    letter-spacing: 0;
+  }
+
 }
