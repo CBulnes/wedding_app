@@ -1,7 +1,8 @@
 .hero {
   min-height: 100vh;
 
-  background-image: url("https://images.unsplash.com/photo-1511285560929-80b456fea0bc");
+  /* background-image: url("https://images.unsplash.com/photo-1511285560929-80b456fea0bc"); */
+  background-image: url("../../assets/weddpaper.jpg");
 
   background-size: cover;
   background-position: center;
@@ -96,4 +97,57 @@
     max-width: 280px;
   }
 
+}
+
+.welcome {
+  max-width: 650px;
+
+  margin: 36px auto;
+
+  padding: 0 20px;
+
+  text-align: center;
+
+  color: white;
+}
+
+.welcome p:first-child {
+  font-size: 1.35rem;
+
+  font-weight: 500;
+
+  margin-bottom: 14px;
+}
+
+.welcome p:last-child {
+  font-size: 1rem;
+
+  line-height: 1.8;
+
+  opacity: .95;
+}
+
+@media (max-width: 768px) {
+
+  .welcome {
+    margin: 28px auto;
+  }
+
+  .welcome p:first-child {
+    font-size: 1.15rem;
+  }
+
+  .welcome p:last-child {
+    font-size: .95rem;
+    line-height: 1.7;
+  }
+
+}
+
+.welcome p {
+  text-transform: lowercase !important;
+}
+
+.welcome p::first-letter {
+  text-transform: uppercase !important;
 }

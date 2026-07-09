@@ -20,10 +20,7 @@ function CashGift() {
         <h2>Regalo en efectivo</h2>
 
         <p className={styles.description}>
-          Tu presencia es lo más importante 💛
-          <br />
-          Pero si deseas apoyarnos con un regalo,
-          puedes hacerlo mediante Yape o transferencia.
+          Si ninguno de los regalos de nuestra lista se ajusta a tu elección, puedes acompañarnos con un aporte en efectivo. Lo recibiremos con mucho cariño y gratitud.
         </p>
 
         <div className={styles.card}>

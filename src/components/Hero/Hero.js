@@ -12,6 +12,16 @@ function Hero() {
 
         <Countdown />
 
+        <div className={styles.welcome}>
+          <p>
+            Tu presencia hará de este día un recuerdo inolvidable.
+          </p>
+
+          <p>
+            Si además deseas sorprendernos con un detalle, puedes conocer nuestra lista de regalos a continuación.
+          </p>
+        </div>
+
         <a href="#gift-section">
             <button>
                 Ver regalos
