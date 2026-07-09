@@ -16,7 +16,6 @@
   background: rgba(0, 0, 0, 0.45);
 
   display: flex;
-
   flex-direction: column;
 
   justify-content: center;
@@ -27,6 +26,7 @@
   color: white;
 
   padding: 2rem;
+  box-sizing: border-box;
 }
 
 .overlay h1 {
@@ -34,19 +34,22 @@
 
   font-weight: 500;
 
+  line-height: 1.1;
+
   margin-bottom: 1rem;
 
   letter-spacing: 2px;
 }
 
-.overlay p {
+/* Solo la fecha */
+.overlay > p {
   font-size: 1.2rem;
 
   letter-spacing: 4px;
 
   text-transform: uppercase;
 
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 }
 
 .overlay a {
@@ -79,30 +82,12 @@
   background: #f0f0f0;
 }
 
-@media (max-width: 768px) {
-
-  .overlay h1 {
-    font-size: 4rem;
-  }
-
-  .overlay p {
-    font-size: 1rem;
-
-    letter-spacing: 2px;
-  }
-
-  .overlay button {
-    width: 100%;
-
-    max-width: 280px;
-  }
-
-}
+/* ---------- Mensaje de bienvenida ---------- */
 
 .welcome {
   max-width: 650px;
 
-  margin: 36px auto;
+  margin: 20px auto 28px;
 
   padding: 0 20px;
 
@@ -127,10 +112,41 @@
   opacity: .95;
 }
 
+/* ---------- Responsive ---------- */
+
 @media (max-width: 768px) {
 
+  .overlay {
+    justify-content: flex-start;
+
+    padding-top: 110px;
+    padding-bottom: 40px;
+  }
+
+  .overlay h1 {
+    font-size: clamp(3.2rem, 12vw, 4rem);
+
+    line-height: 1.1;
+
+    margin-bottom: .8rem;
+  }
+
+  .overlay > p {
+    font-size: 1rem;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 1.5rem;
+  }
+
+  .overlay button {
+    width: 100%;
+
+    max-width: 280px;
+  }
+
   .welcome {
-    margin: 28px auto;
+    margin: 18px auto 24px;
   }
 
   .welcome p:first-child {
@@ -139,15 +155,8 @@
 
   .welcome p:last-child {
     font-size: .95rem;
+
     line-height: 1.7;
   }
 
-}
-
-.welcome p {
-  text-transform: lowercase !important;
-}
-
-.welcome p::first-letter {
-  text-transform: uppercase !important;
 }

@@ -3,15 +3,19 @@
   justify-content: center;
   gap: 1.5rem;
 
-  margin-bottom: 3rem;
+  margin-bottom: 1.75rem;
 }
 
 .countdown div {
   min-width: 90px;
+  aspect-ratio: 1 / 1;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   background: rgba(255, 255, 255, 0.15);
-
-  padding: 1rem;
 
   border-radius: 24px;
 
@@ -31,14 +35,15 @@
   display: block;
 
   font-size: 2rem;
-
   font-weight: 600;
+
+  line-height: 1;
 
   color: white;
 }
 
 .countdown p {
-  margin-top: 0.35rem;
+  margin: 0.45rem 0 0;
 
   font-size: 0.85rem;
 
@@ -49,7 +54,7 @@
   color: white;
 }
 
-/* ---------- Tablets ---------- */
+/* ---------- Tablets y móviles ---------- */
 
 @media (max-width: 768px) {
 
@@ -58,6 +63,8 @@
     flex-wrap: nowrap;
 
     width: 100%;
+
+    margin-bottom: 1.4rem;
   }
 
   .countdown div {
@@ -65,7 +72,7 @@
 
     min-width: 0;
 
-    padding: 0.75rem 0.35rem;
+    aspect-ratio: 1 / 1;
 
     border-radius: 18px;
   }
@@ -75,7 +82,7 @@
   }
 
   .countdown p {
-    margin-top: 0.25rem;
+    margin-top: 0.35rem;
 
     font-size: 0.72rem;
 
@@ -90,10 +97,6 @@
 
   .countdown {
     gap: 0.45rem;
-  }
-
-  .countdown div {
-    padding: 0.65rem 0.25rem;
   }
 
   .countdown span {
