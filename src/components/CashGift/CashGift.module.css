@@ -83,3 +83,121 @@
 .info a:hover {
   background: #444;
 }
+
+.bankAccounts {
+  display: flex;
+  flex-direction: column;
+
+  gap: 28px;
+
+  margin-top: 28px;
+}
+
+.account {
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 12px;
+}
+
+.account h4 {
+  margin: 0;
+
+  font-size: 1.2rem;
+
+  font-weight: 600;
+
+  color: #222;
+}
+
+.accountNumber {
+  width: 100%;
+  max-width: 320px;
+
+  border: 1px solid #e8e8e8;
+
+  background: #fafafa;
+
+  border-radius: 16px;
+
+  padding: 18px;
+
+  cursor: pointer;
+
+  transition: .25s ease;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 8px;
+
+  font-family: monospace;
+
+  font-size: 1.1rem;
+
+  letter-spacing: 1px;
+
+  color: #444;
+}
+
+.accountNumber:hover {
+  background: #f3f3f3;
+
+  transform: translateY(-2px);
+}
+
+.accountNumber span {
+  font-family: inherit;
+
+  font-size: .8rem;
+
+  letter-spacing: 0;
+
+  color: #888;
+}
+
+.separator {
+  width: 70%;
+  height: 1px;
+
+  margin: auto;
+
+  background: #ececec;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  text-align: center;
+}
+
+.infoBlock {
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+
+  margin-bottom: 24px;
+}
+
+.infoBlock h4 {
+  margin: 0 0 8px;
+
+  font-size: 1.2rem;
+
+  font-weight: 600;
+
+  color: #222;
+}
+
+.infoBlock span {
+  font-size: 1.05rem;
+
+  color: #444;
+}

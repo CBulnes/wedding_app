@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import Navbar from "./components/Navbar/Navbar";
 
@@ -23,16 +23,48 @@ function App() {
 
   }, []);
 
+  const [alert, setAlert] = useState({
+    show: false,
+    title: "",
+    message: "",
+    type: "success",
+  });
+
+  function showAlert(title, message, type = "success") {
+    setAlert({
+      show: true,
+      title,
+      message,
+      type,
+    });
+
+    setTimeout(() => {
+      setAlert((prev) => ({
+        ...prev,
+        show: false,
+      }));
+    }, 2500);
+  }
+
   return (
     <main>
+
+      {alert.show && (
+        <div className="alertOverlay">
+          <div className={`alertBox ${alert.type}`}>
+            <h3>{alert.title}</h3>
+            <p>{alert.message}</p>
+          </div>
+        </div>
+      )}
 
       <Navbar />
 
       <Hero />
 
-      <GiftList />
+      <GiftList showAlert={showAlert} />
 
-      <CashGift />
+      <CashGift showAlert={showAlert} />
 
     </main>
   );

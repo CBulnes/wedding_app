@@ -10,7 +10,7 @@ import {
   reserveGift,
 } from "../../services/giftsService";
 
-function GiftList() {
+function GiftList({ showAlert }) {
 
   const [gifts, setGifts] = useState([]);
   const [sortBy, setSortBy] = useState("nameAsc");
@@ -20,13 +20,6 @@ function GiftList() {
   const [loadingAction, setLoadingAction] = useState(false);
   const [loadingGiftId, setLoadingGiftId] = useState(null);
 
-  const [alert, setAlert] = useState({
-    show: false,
-    title: "",
-    message: "",
-    type: "success",
-  });
-
   useEffect(() => {
     const init = async () => {
       await loadGifts();
@@ -35,22 +28,6 @@ function GiftList() {
     init();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  function showAlert(title, message, type = "success") {
-    setAlert({
-      show: true,
-      title,
-      message,
-      type,
-    });
-
-    setTimeout(() => {
-      setAlert((prev) => ({
-        ...prev,
-        show: false,
-      }));
-    }, 2500);
-  }
 
   function normalizeGifts(data) {
   return data.map((gift) => ({
@@ -238,17 +215,6 @@ function GiftList() {
       id="gift-section"
       className={styles.giftSection}
     >
-
-      {alert.show && (
-        <div className={styles.alertOverlay}>
-          <div
-            className={`${styles.alertBox} ${styles[alert.type]}`}
-          >
-            <h3>{alert.title}</h3>
-            <p>{alert.message}</p>
-          </div>
-        </div>
-      )}
 
       {loadingAction && (
         <div className={styles.loadingOverlay}>
