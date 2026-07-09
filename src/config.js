@@ -1,6 +1,7 @@
 export const PAYMENT_INFO = {
-  yapeDisplay: "947 743 416",
-  yapeRaw: "51947743416",
-  holder: "Carlos Bulnes",
-  cuenta: "12123-456456-789789"
+  yapeDisplay: "983485986",
+  yapeRaw: "51983485986",
+  holder: "Melissa Valderrama",
+  cuentaBcp: "19192268227027",
+  cuentaBbva: "001108140254909047"
 };

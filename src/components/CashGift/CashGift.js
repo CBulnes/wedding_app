@@ -1,5 +1,5 @@
 import styles from "./CashGift.module.css";
-import yapeQR from "../../assets/yape.png";
+import yapeQR from "../../assets/plin_.jpg";
 import { PAYMENT_INFO } from "../../config";
 
 function CashGift() {
@@ -17,7 +17,7 @@ function CashGift() {
 
       <div className={styles.container}>
 
-        <h2>Regalo en efectivo</h2>
+        <h2 className={styles.titleRegalo}>Regalo en efectivo</h2>
 
         <p className={styles.description}>
           Si ninguno de los regalos de nuestra lista se ajusta a tu elección, puedes acompañarnos con un aporte en efectivo. Lo recibiremos con mucho cariño y gratitud.
@@ -33,7 +33,7 @@ function CashGift() {
           <div className={styles.info}>
 
             <p>
-              <strong>Yape:</strong>
+              <strong>Plin:</strong>
               <br />
               {PAYMENT_INFO.yapeDisplay}
             </p>
@@ -47,7 +47,11 @@ function CashGift() {
             <p>
               <strong>Cuenta BCP:</strong>
               <br />
-              {PAYMENT_INFO.cuenta}
+              {PAYMENT_INFO.cuentaBcp}
+              <br />
+              <strong>Cuenta BBVA:</strong>
+              <br />
+              {PAYMENT_INFO.cuentaBbva}
             </p>
 
             <a
